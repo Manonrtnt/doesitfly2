@@ -1,34 +1,34 @@
-package com.example.doesitfly.view.activity
+package com.example.doesitfly.presentation.view.activity
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import com.example.doesitfly.R
-import com.example.doesitfly.api.RequestUtils
-import com.example.doesitfly.beans.FlyingSiteBean
+import com.example.doesitfly.data.remote.ApiService
 import com.example.doesitfly.databinding.ActivityMainBinding
-import com.example.doesitfly.utils.URL_API_FLYING_SITE
-import com.example.doesitfly.viewModel.ListFlyingSiteViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.example.doesitfly.presentation.viewmodel.ListFlyingSiteViewModel
+import com.example.doesitfly.presentation.viewmodel.ListFlyingSiteViewModelFactory
 
 
 class MainActivity : AppCompatActivity() {
 
     private val binding by lazy {ActivityMainBinding.inflate(layoutInflater)}
-//    private val viewModel by lazy { ViewModelProvider(this)[ListFlyingSiteViewModel::class.java] }
+
+    val apiService = ApiService()
+
+    //Use this to inject you dependency or use Koin
+    val factory = ListFlyingSiteViewModelFactory(apiService)
+    val viewModel = ViewModelProvider(this, factory).get(ListFlyingSiteViewModel::class.java)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        loadFlyingSite()
 
     }
 
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun loadFlyingSite() : List<FlyingSiteBean> {
+    /*fun loadFlyingSite() : List<FlyingSiteBean> {
 
         var listFlyingSiteBean = listOf<FlyingSiteBean>()
 
@@ -74,6 +74,6 @@ class MainActivity : AppCompatActivity() {
 
         }
         return listFlyingSiteBean
-    }
+    }*/
 
 }

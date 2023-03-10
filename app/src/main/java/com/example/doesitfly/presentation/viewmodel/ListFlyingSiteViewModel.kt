@@ -1,22 +1,33 @@
-package com.example.doesitfly.viewModel
+package com.example.doesitfly.presentation.viewmodel
 
 import android.util.Log
-import androidx.lifecycle.LifecycleCoroutineScope
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.doesitfly.api.RequestUtils
+import androidx.lifecycle.*
 import com.example.doesitfly.beans.FlyingSiteBean
-import com.example.doesitfly.utils.URL_API_FLYING_SITE
-import kotlinx.coroutines.Dispatchers
+import com.example.doesitfly.data.remote.ApiService
+import com.example.doesitfly.data.repository.RemoteRepository
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import okhttp3.*
+import java.io.IOException
 
-class ListFlyingSiteViewModel : ViewModel() {
+class ListFlyingSiteViewModel(apiService: ApiService) : ViewModel() {
     val data: MutableLiveData<List<FlyingSiteBean>> = MutableLiveData<List<FlyingSiteBean>>().apply { value = emptyList() }
     var runInProgress = MutableLiveData(false)
     var errorMessage = MutableLiveData("ERROR")
 
+    private val _myData = MutableLiveData<List<FlyingSiteBean>>()
+    val myData: LiveData<List<FlyingSiteBean>> = _myData
+
+    var repo = RemoteRepository(apiService)
+
+    init {
+        viewModelScope.launch {
+            _myData.value = repo.fetchData()
+        }
+    }
+
+    //TODO : CLEAN CODE
     /** load flying site data : FlyingSiteBean from API */
 //    fun loadData(){
 //        // Reset data
@@ -35,7 +46,8 @@ class ListFlyingSiteViewModel : ViewModel() {
 ////        runInProgress.postValue(false)
 //    }
 
-    fun loadData() {
+    //TODO : CLEAN CODE
+    /*fun loadData() {
         viewModelScope.launch {
             try {
                 val sites = withContext(Dispatchers.IO) {
@@ -52,9 +64,39 @@ class ListFlyingSiteViewModel : ViewModel() {
                 errorMessage.value = e.message
             }
         }
-    }
+    }*/
 
-    fun loadFlyingSite() : List<FlyingSiteBean> {
+    //TODO: this methods work and dont forget HTTPS otherwise it won't work
+    //private val _myData = MutableLiveData<List<FlyingSiteBean>>()
+    //val myData: LiveData<List<FlyingSiteBean>> = _myData
+
+    /*fun fetchData() {
+        val client = OkHttpClient()
+        val request = Request.Builder()
+            .url("https://data.ffvl.fr/json/sites.json")
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.d("TODO -1","TEST TEST TEST")
+                Log.d("TODO ERROR",e.toString())
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val jsonData = response.body?.string()
+                val moshi = Moshi.Builder()
+                    .add(KotlinJsonAdapterFactory())
+                    .build()
+                val adapter = moshi.adapter(FlyingSiteBean::class.java)
+                //val myDataList = adapter.fromJson(jsonData)
+                //_myData.postValue(myDataList)
+                Log.d("TODO 0","TEST TEST TEST")
+                Log.d("TODO 1",jsonData.toString())
+            }
+        })
+    }*/
+
+    /*fun loadFlyingSite() : List<FlyingSiteBean> {
 
         var listFlyingSiteBean = listOf<FlyingSiteBean>()
 
@@ -77,6 +119,6 @@ class ListFlyingSiteViewModel : ViewModel() {
 
         }
         return listFlyingSiteBean
-    }
+    }*/
 
 }

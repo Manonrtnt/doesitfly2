@@ -1,4 +1,4 @@
-package com.example.doesitfly.view.adapter
+package com.example.doesitfly.presentation.view.adapter
 
 //class FlyingSiteAdapter extends RecyclerView.Adapter<FlyingSiteViewHolder> {
 //}

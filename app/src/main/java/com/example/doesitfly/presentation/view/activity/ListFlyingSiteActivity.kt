@@ -1,4 +1,4 @@
-package com.example.doesitfly.view.activity
+package com.example.doesitfly.presentation.view.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,8 +7,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.doesitfly.databinding.ActivityListBinding
-import com.example.doesitfly.view.adapter.ListCardAdapter
-import com.example.doesitfly.viewModel.ListFlyingSiteViewModel
+import com.example.doesitfly.presentation.view.adapter.ListCardAdapter
+import com.example.doesitfly.presentation.viewmodel.ListFlyingSiteViewModel
 
 class ListFlyingSiteActivity : AppCompatActivity() {
 
@@ -28,7 +28,7 @@ class ListFlyingSiteActivity : AppCompatActivity() {
         }
 
         // Chargez vos données dans votre ViewModel
-        viewModel.loadData()
+        viewModel.fetchData()
 
 //        // Reactive programming
 //        observe()

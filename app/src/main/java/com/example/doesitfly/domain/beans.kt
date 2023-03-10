@@ -1,5 +1,6 @@
 package com.example.doesitfly.beans
 
+//TODO : Domain folder is for data models
 /* -------------------------------- */
 // API Weather Beacon Bean
 /* -------------------------------- */

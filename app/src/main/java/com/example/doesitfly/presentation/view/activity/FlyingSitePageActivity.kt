@@ -1,4 +1,4 @@
-package com.example.doesitfly.view.activity
+package com.example.doesitfly.presentation.view.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

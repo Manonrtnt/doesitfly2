@@ -16,11 +16,12 @@ import java.io.StringWriter
 import java.net.URL
 
 object RequestUtils {
+    //TODO : TO DELETE OUR NETWORK IS IN APISERVICE CLASS
     private val client = OkHttpClient()
     private val gson = Gson()
 
 
-    fun sendGet(url: String): String? {
+    /*fun sendGet(url: String): String? {
         var result: String? = null
 
         try {
@@ -36,7 +37,7 @@ object RequestUtils {
             print("Error when executing get request: "+err.localizedMessage)
         }
         return result
-    }
+    }*/
 
 
 
