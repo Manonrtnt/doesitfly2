@@ -59,11 +59,4 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-
-
-    // Moshi est une bibliothèque de sérialisation/désérialisation JSON pour Java et Kotlin.
-    // Elle permet de convertir facilement des objets Java ou Kotlin en JSON et vice versa.
-    // Il existe plusieurs bibliothèques de sérialisation/désérialisation JSON pour Android,
-    // mais Moshi est plus avantageuse (facile et performante)
-    implementation "com.squareup.moshi:moshi-kotlin:1.12.0"
 }

@@ -16,7 +16,7 @@ import java.io.StringWriter
 import java.net.URL
 
 object RequestUtils {
-    //TODO : TO DELETE OUR NETWORK IS IN APISERVICE CLASS
+    //TODO : DELETE This object because now is replaced by NETWORK IN APISERVICE CLASS
     private val client = OkHttpClient()
     private val gson = Gson()
 

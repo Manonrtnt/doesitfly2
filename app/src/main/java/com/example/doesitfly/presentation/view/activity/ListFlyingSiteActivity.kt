@@ -28,7 +28,7 @@ class ListFlyingSiteActivity : AppCompatActivity() {
         }
 
         // Chargez vos données dans votre ViewModel
-        viewModel.fetchData()
+        //viewModel.fetchData()
 
 //        // Reactive programming
 //        observe()

@@ -3,18 +3,21 @@ package com.example.doesitfly.data.repository
 import android.util.Log
 import com.example.doesitfly.beans.FlyingSiteBean
 import com.example.doesitfly.data.remote.ApiService
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
-class RemoteRepository(private val apiService: ApiService) {
+class RemoteRepository() {
 
-    //TODO: BUSINESS LOGIC TO PERFORM OUR API METHODS
-    fun fetchData(): List<FlyingSiteBean> {
+    // Init API Service class
+    private val apiService = ApiService()
+
+    //TODO: BUSINESS LOGIC (BL) TO PERFORM OUR API METHODS
+    // Note: BL is used to manages communication between an end user application and a database
+    fun getFlyingSitesFromApi(): List<FlyingSiteBean> {
         val jsonData = apiService.fetchData()
-        val moshi = Moshi.Builder().build()
-        val type = Types.newParameterizedType(List::class.java, FlyingSiteBean::class.java)
-        val adapter = moshi.adapter<List<FlyingSiteBean>>(type)
-        Log.d("TODO 0", jsonData.toString())
-        return adapter.fromJson(jsonData) ?: emptyList()
+        // Convert JSON Response to List of FlyingSites
+        val flyingSites = Gson().fromJson<List<FlyingSiteBean>>(jsonData, object : TypeToken<List<FlyingSiteBean>>() {}.type)
+        Log.d("TODO 0000", jsonData.toString())
+        return flyingSites ?: emptyList()
     }
 }

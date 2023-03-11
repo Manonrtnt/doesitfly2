@@ -1,21 +1,39 @@
 package com.example.doesitfly.data.remote
 
-import okhttp3.OkHttpClient
-import okhttp3.Request
+import android.util.Log
+import kotlinx.coroutines.DelicateCoroutinesApi
+import okhttp3.*
 import java.io.IOException
+import java.util.concurrent.CompletableFuture
 
-class ApiService() {
+@OptIn(DelicateCoroutinesApi::class)
+class ApiService {
+
     // APISERVICE CLASS FOR NETWORK METHODS
-    fun fetchData(): String? {
+    //TODO: this methods work and dont forget HTTPS URL otherwise it won't work
+    fun fetchData(): String {
         val client = OkHttpClient()
 
         val request = Request.Builder()
-            .url("http://data.ffvl.fr/json/sites.json")
+            .url("https://data.ffvl.fr/json/sites.json")
             .build()
 
-        client.newCall(request).execute().use { response ->
-            if (!response.isSuccessful) throw IOException("Unexpected code $response")
-            return response.body?.string()
-        }
+        val completableFuture = CompletableFuture<String>()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                completableFuture.completeExceptionally(e)
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                val jsonResponse = response.body?.string().toString()
+
+                Log.d("TODO 22222", jsonResponse)
+
+                completableFuture.complete(jsonResponse)
+            }
+        })
+
+        return completableFuture.get()
     }
 }
